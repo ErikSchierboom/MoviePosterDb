@@ -31,7 +31,7 @@
             Assert.Equal(@"Mandela: Long Walk to Freedom", moviePosterDbResult.Title);
             Assert.Equal("2013", moviePosterDbResult.Year);
             Assert.Equal("2304771", moviePosterDbResult.ImdbMovieId);
-            Assert.Equal(@"http://api.movieposterdb.com/cache/normal/71/2304771/2304771_300.jpg", moviePosterDbResult.Posters[0].ImageLocation);
+            Assert.Equal(@"http://api.movieposterdb.com/cache/normal/71/2304771/2304771_300.jpg", moviePosterDbResult.Posters[0].Url);
             Assert.Equal(1, moviePosterDbResult.Posters.Count());
         }
 
