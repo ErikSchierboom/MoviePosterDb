@@ -1,0 +1,87 @@
+﻿@using Newtonsoft.Json
+@model MoviePosterDbDemo.Models.IndexViewModel
+
+@{
+    ViewBag.Title = Model.MoviePosterDbResult == null ? "MoviePosterDB API explorer" : string.Format("{0} ({1}) poster", Model.MoviePosterDbResult.Title, Model.MoviePosterDbResult.Year);
+}
+
+<div class="row">
+    <p class="lead">On this page you can try out the <a href="https://github.com/ErikSchierboom/MoviePosterDb" title="MoviePosterDb library">MoviePosterDb library</a>.</p>
+    <p>Installing the library is easy using NuGet: <pre>Install-Package MoviePosterDb</pre>.</p>
+    <p>After that you are ready to use the library! To test the library, just use the search form to enter your search data and then click on the Search button.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Search</h2>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @role = "form" }))
+        {
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ApiKey)
+                @Html.EditorFor(m => m.ApiKey, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ApiKey)
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.ApiSecret)
+                @Html.EditorFor(m => m.ApiSecret, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ApiSecret)
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImdbMovieId)
+                @Html.EditorFor(m => m.ImdbMovieId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ImdbMovieId)
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImdbMovieUrl)
+                @Html.EditorFor(m => m.ImdbMovieUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ImdbMovieUrl)
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImageWidth)
+                @Html.EditorFor(m => m.ImageWidth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ImageWidth)
+            </div>
+            
+            <button class="btn btn-lg btn-primary" type="submit">Search</button>
+        }
+
+    </div>
+    <div class="col-md-9">
+        <h2>Results</h2>
+        @if (Model.MoviePosterDbResult == null)
+        {
+            <p>Please enter the search values in the form to the left and then click on the Search button to search for a movie's poster.</p>
+        }
+        else
+        {
+            <pre>@JsonConvert.SerializeObject(Model.MoviePosterDbResult, Formatting.Indented)</pre>
+        }
+    </div>
+</div>
+
+@if (Model.MoviePosterDbResult != null)
+{
+    <div class="row">
+        <h2>Code used for searching:</h2>
+
+        <p>
+            @if (Model.ImdbMovieId.HasValue)
+            {
+<pre>var moviePosterDbService = new MoviePosterDbService("@Model.ApiKey", "@Model.ApiKey");
+var moviePosterDbResult = moviePosterDbService.Search(@Model.ImdbMovieId, @Model.ImageWidth);</pre>
+            }
+            else
+            {
+<pre>var moviePosterDbService = new MoviePosterDbService("@Model.ApiKey", "@Model.ApiKey");
+var moviePosterDbResult = moviePosterDbService.Search("@Model.ImdbMovieUrl", @Model.ImageWidth);</pre>
+            }
+        </p>
+    </div>
+}
