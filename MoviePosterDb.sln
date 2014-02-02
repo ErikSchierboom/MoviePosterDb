@@ -12,8 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0AB1907B-6045-4696-9183-CD5C39CDA106}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
-		MoviePosterDb.nuspec = MoviePosterDb.nuspec
-		pack-nuget.cmd = pack-nuget.cmd
 		README.md = README.md
 	EndProjectSection
 EndProject
