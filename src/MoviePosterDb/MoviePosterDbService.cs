@@ -3,132 +3,94 @@
     using System;
     using System.IO;
     using System.Net;
-    using System.Runtime.Serialization;
     using System.Runtime.Serialization.Json;
     using System.Text;
 
     public class MoviePosterDbService
     {
-        private const string ApiUrl = "http://api.movieposterdb.com/json?imdb_code={0}&api_key={1}&secret={2}&width={3}";
+        private const string SearchByImdbMovieIdApiUrl = "http://api.movieposterdb.com/json?imdb_code={0}&api_key={1}&secret={2}&width={3}";
+        private const string InvalidImdbMovieUrlMessage = "The URL is not a valid IMDb movie URL.";
+        private const int MinimumImageWidth = 30;
+        private const int MaximumImageWidth = 300;
 
         private readonly string apiKey;
         private readonly string apiSecret;
 
         public MoviePosterDbService(string apiKey, string apiSecret)
         {
-            if (apiKey == null)
-            {
-                throw new ArgumentNullException("apiKey");
-            }
-
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new ArgumentException("The API key must not be empty.", "apiKey");
-            }
-
-            if (apiSecret == null)
-            {
-                throw new ArgumentNullException("apiSecret");
-            }
-
-            if (string.IsNullOrEmpty(apiSecret))
-            {
-                throw new ArgumentException("The API secret must not be empty.", "apiSecret");
-            }
+            Check.NotNullOrEmpty(apiKey, "apiKey");
+            Check.NotNullOrEmpty(apiSecret, "apiSecret");
 
             this.apiSecret = apiSecret;
             this.apiKey = apiKey;
         }
 
-        public Uri GetPosterUrl(string imdbMovieUrl, int imageWidth)
+        public MoviePosterDbResult Search(int imdbMovieId, int imageWidth)
         {
-            return this.GetPosterUrl(new Uri(imdbMovieUrl), imageWidth);
+            Check.GreaterThanZero(imdbMovieId, "imdbMovieId");
+            Check.InRange(imageWidth, MinimumImageWidth, MaximumImageWidth, "imageWidth");
+
+            return RequestAndParseApiUrl(this.GetApiUrl(imdbMovieId, imageWidth));
         }
 
-        public Uri GetPosterUrl(Uri imdbMovieUrl, int imageWidth)
+        public MoviePosterDbResult Search(Uri imdbMovieUrl, int imageWidth)
         {
-            if (imdbMovieUrl == null)
-            {
-                throw new ArgumentNullException("imdbMovieUrl");
-            }
+            Check.NotNull(imdbMovieUrl, "imdbMovieUrl");
+            Check.That(imdbMovieUrl.IsImdbMovieUrl(), "imdbMovieUrl", InvalidImdbMovieUrlMessage);
+            Check.InRange(imageWidth, MinimumImageWidth, MaximumImageWidth, "imageWidth");
 
-            if (!imdbMovieUrl.IsImdbMovieUrl())
-            {
-                throw new ArgumentException("The URL is not a valid IMDb movie URL.", "imdbMovieUrl");
-            }
+            return RequestAndParseApiUrl(this.GetApiUrl(imdbMovieUrl, imageWidth));
+        }
 
-            if (imageWidth < 30 || imageWidth > 300)
-            {
-                throw new ArgumentOutOfRangeException("imageWidth", imageWidth, "The image width must be within the [30-300] range.");
-            }
+        public Uri GetApiUrl(Uri imdbMovieUrl, int imageWidth)
+        {
+            Check.NotNull(imdbMovieUrl, "imdbMovieUrl");
+            Check.That(imdbMovieUrl.IsImdbMovieUrl(), "imdbMovieUrl", InvalidImdbMovieUrlMessage);
+            Check.InRange(imageWidth, MinimumImageWidth, MaximumImageWidth, "imageWidth");
 
+            return this.GetApiUrl(imdbMovieUrl.GetImdbMovieId(), imageWidth);
+        }
+
+        public Uri GetApiUrl(int imdbMovieId, int imageWidth)
+        {
+            Check.GreaterThanZero(imdbMovieId, "imdbMovieId");
+            Check.InRange(imageWidth, MinimumImageWidth, MaximumImageWidth, "imageWidth");
+
+            return new Uri(string.Format(SearchByImdbMovieIdApiUrl, imdbMovieId, this.apiKey, this.CalculateSecret(imdbMovieId), imageWidth));
+        }
+
+        public string CalculateSecret(Uri imdbMovieUrl)
+        {
+            Check.NotNull(imdbMovieUrl, "imdbMovieUrl");
+            Check.That(imdbMovieUrl.IsImdbMovieUrl(), "imdbMovieUrl", InvalidImdbMovieUrlMessage);
+
+            return this.CalculateSecret(imdbMovieUrl.GetImdbMovieId());
+        }
+
+        public string CalculateSecret(int imdbMovieId)
+        {
+            Check.GreaterThanZero(imdbMovieId, "imdbMovieId");
+
+            return (this.apiSecret + imdbMovieId).ToMd5().Substring(10, 12);
+        }
+
+        private static MoviePosterDbResult RequestAndParseApiUrl(Uri apiUrl)
+        {
             using (var webClient = new WebClient())
             {
                 webClient.Encoding = Encoding.UTF8;
 
-                return ParsePosterUrl(webClient.DownloadData(this.GetApiUrl(imdbMovieUrl)));
+                return ParseApiResponse(webClient.DownloadData(apiUrl));
             }
         }
 
-        public Uri GetApiUrl(Uri imdbUrl)
+        private static MoviePosterDbResult ParseApiResponse(byte[] apiResponseData)
         {
-            if (imdbUrl == null)
-            {
-                throw new ArgumentNullException("imdbUrl");
-            }
-
-            if (!imdbUrl.IsImdbMovieUrl())
-            {
-                throw new ArgumentException("The URL is not a valid IMDb movie URL.", "imdbUrl");
-            }
-
-            return new Uri(string.Format(ApiUrl, imdbUrl.GetImdbId(), this.apiKey, this.CalculateSecret(imdbUrl), 300));
-        }
-
-        public string CalculateSecret(Uri imdbUrl)
-        {
-            if (imdbUrl == null)
-            {
-                throw new ArgumentNullException("imdbUrl");
-            }
-
-            if (!imdbUrl.IsImdbMovieUrl())
-            {
-                throw new ArgumentException("The URL is not a valid IMDb movie URL.", "imdbUrl");
-            }
-
-            return (this.apiSecret + imdbUrl.GetImdbId()).ToMd5().Substring(10, 12);
-        }
-
-        private static Uri ParsePosterUrl(byte[] downloadString)
-        {
-            using (var stream = new MemoryStream(downloadString))
+            using (var stream = new MemoryStream(apiResponseData))
             {
                 var serializer = new DataContractJsonSerializer(typeof(MoviePosterDbResult));
-                var moviePosterDbResult = serializer.ReadObject(stream) as MoviePosterDbResult;
-
-                if (moviePosterDbResult == null || moviePosterDbResult.Posters == null || moviePosterDbResult.Posters.Length == 0)
-                {
-                    return null;
-                }
-
-                return new Uri(moviePosterDbResult.Posters[0].ImageLocation);
+                return serializer.ReadObject(stream) as MoviePosterDbResult;
             }
-            
-        }
-
-        [DataContract]
-        private class MoviePosterDbResult
-        {
-            [DataMember(Name = "posters")]
-            public MoviePosterDbPoster[] Posters { get; set; }
-        }
-
-        [DataContract]
-        private class MoviePosterDbPoster
-        {
-            [DataMember(Name = "image_location")]
-            public string ImageLocation { get; set; }
         }
     }
 }

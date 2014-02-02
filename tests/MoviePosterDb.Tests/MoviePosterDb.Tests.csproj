@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckTests.cs" />
     <Compile Include="MoviePosterDbServiceTests.cs" />
     <Compile Include="UriExtensionsTests.cs" />
     <Compile Include="CryptographyExtensionsTests.cs" />

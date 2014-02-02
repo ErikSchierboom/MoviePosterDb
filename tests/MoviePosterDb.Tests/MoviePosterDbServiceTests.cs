@@ -19,7 +19,7 @@
             string nullApiKey = null;
 
             // Act
-
+            
             // Assert
             Assert.Throws<ArgumentNullException>(() => new MoviePosterDbService(nullApiKey, "api secret"));
         }
@@ -60,19 +60,6 @@
             Assert.Throws<ArgumentException>(() => new MoviePosterDbService("api key", emptyApiSecret));
         }
 
-        [Fact]
-        public void GetPosterUrlWithNullImdbMovieUrlThrowsArgumentNullException()
-        {
-            // Arrange
-            string nullImdbMovieUrl = null;
-            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
-
-            // Act
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => moviePosterDbService.GetPosterUrl(nullImdbMovieUrl, ImageWidth));
-        }
-
         [Theory]
         [InlineData("http://www.imdb.com/")]
         [InlineData("http://www.imdb.com/list/PQDCzc8WwVQ/")]
@@ -82,7 +69,7 @@
         [InlineData("http://www.imdb.com/boxoffice/alltimegross?region=world-wide")]
         [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
         [InlineData("http://www.google.com")]
-        public void GetPosterUrlWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
+        public void SearchWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -90,7 +77,7 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetPosterUrl(invalidImdbMovieUrl, ImageWidth));
+            Assert.Throws<ArgumentException>(() => moviePosterDbService.Search(new Uri(invalidImdbMovieUrl), ImageWidth));
         }
 
         [Theory]
@@ -99,7 +86,7 @@
         [InlineData("http://www.imdb.com/title/tt/")]
         [InlineData("http://www.imdb.com/title/")]
         [InlineData("http://www.imdb.com/title")]
-        public void GetPosterUrlWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
+        public void SearchWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -107,57 +94,7 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetPosterUrl(incompleteImdbMovieUrl, ImageWidth));
-        }
-
-        [Fact]
-        public void GetPosterUrlOverloadWithNullImdbMovieUrlThrowsArgumentNullException()
-        {
-            // Arrange
-            Uri nullImdbMovieUrl = null;
-            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
-
-            // Act
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => moviePosterDbService.GetPosterUrl(nullImdbMovieUrl, ImageWidth));
-        }
-
-        [Theory]
-        [InlineData("http://www.imdb.com/")]
-        [InlineData("http://www.imdb.com/list/PQDCzc8WwVQ/")]
-        [InlineData("http://www.imdb.com/search/title?genres=drama&title_type=feature&num_votes=5000,&sort=user_rating,desc")]
-        [InlineData("http://www.imdb.com/search/title?release_date=1990,1999&title_type=feature&num_votes=5000,&sort=user_rating,desc")]
-        [InlineData("http://www.imdb.com/chart/top/")]
-        [InlineData("http://www.imdb.com/boxoffice/alltimegross?region=world-wide")]
-        [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
-        [InlineData("http://www.google.com")]
-        public void GetPosterUrlOverloadWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
-        {
-            // Arrange
-            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
-
-            // Act
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetPosterUrl(new Uri(invalidImdbMovieUrl), ImageWidth));
-        }
-
-        [Theory]
-        [InlineData("http://www.imdb.com/title/tt123456/")]
-        [InlineData("http://www.imdb.com/title/tt1/")]
-        [InlineData("http://www.imdb.com/title/tt/")]
-        [InlineData("http://www.imdb.com/title/")]
-        [InlineData("http://www.imdb.com/title")]
-        public void GetPosterUrlOverloadWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
-        {
-            // Arrange
-            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
-
-            // Act
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetPosterUrl(new Uri(incompleteImdbMovieUrl), ImageWidth));
+            Assert.Throws<ArgumentException>(() => moviePosterDbService.Search(new Uri(incompleteImdbMovieUrl), ImageWidth));
         }
 
         [Theory]
@@ -166,7 +103,7 @@
         [InlineData(29)]
         [InlineData(301)]
         [InlineData(500)]
-        public void GetPosterUrlOverloadWithImageWidthOutOfRangeThrowsArgumentOutOfRangeException(int invalidImageWidth)
+        public void SearchWithImdbMovieUrlAndImageWidthOutOfRangeThrowsArgumentOutOfRangeException(int invalidImageWidth)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -174,20 +111,51 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => moviePosterDbService.GetPosterUrl(new Uri(ImdbMovieUrl), invalidImageWidth));
+            Assert.Throws<ArgumentOutOfRangeException>(() => moviePosterDbService.Search(new Uri(ImdbMovieUrl), invalidImageWidth));
         }
+
         [Theory]
-        [InlineData("http://www.imdb.com/title/tt2304771")]
-        [InlineData("http://www.imdb.com/title/tt2304771/")]
-        [InlineData("http://www.imdb.com/title/tt2304771/reference")]
-        [InlineData("http://www.imdb.com/title/tt2304771/reference/")]
-        public void GetApiUrlReturnsCorrectApiUrl(string imdbMovieUrl)
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-300)]
+        public void SearchWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
 
             // Act
-            var apiUrl = moviePosterDbService.GetApiUrl(new Uri(imdbMovieUrl));
+
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => moviePosterDbService.Search(invalidImdbMovieId, ImageWidth));
+        }
+
+        [Theory]
+        [InlineData(2304771)]
+        [InlineData(02304771)]
+        public void GetApiUrlWithImdbMovieIdReturnsCorrectApiUrl(int imdbMovieId)
+        {
+            // Arrange
+            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
+
+            // Act
+            var apiUrl = moviePosterDbService.GetApiUrl(imdbMovieId, ImageWidth);
+
+            // Assert
+            Assert.Equal("http://api.movieposterdb.com/json?imdb_code=2304771&api_key=test-api-key&secret=8435ce4c53ff&width=300", apiUrl.ToString());
+        }
+
+        [Theory]
+        [InlineData("http://www.imdb.com/title/tt2304771")]
+        [InlineData("http://www.imdb.com/title/tt2304771/")]
+        [InlineData("http://www.imdb.com/title/tt2304771/reference")]
+        [InlineData("http://www.imdb.com/title/tt2304771/reference/")]
+        public void GetApiUrlWithImdbMovieUrlReturnsCorrectApiUrl(string imdbMovieUrl)
+        {
+            // Arrange
+            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
+
+            // Act
+            var apiUrl = moviePosterDbService.GetApiUrl(new Uri(imdbMovieUrl), ImageWidth);
 
             // Assert
             Assert.Equal("http://api.movieposterdb.com/json?imdb_code=2304771&api_key=test-api-key&secret=8435ce4c53ff&width=300", apiUrl.ToString());
@@ -203,7 +171,7 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => moviePosterDbService.GetApiUrl(nullImdbMovieUrl));
+            Assert.Throws<ArgumentNullException>(() => moviePosterDbService.GetApiUrl(nullImdbMovieUrl, ImageWidth));
         }
 
         [Theory]
@@ -220,7 +188,37 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetApiUrl(new Uri(invalidImdbMovieUrl)));
+            Assert.Throws<ArgumentException>(() => moviePosterDbService.GetApiUrl(new Uri(invalidImdbMovieUrl), ImageWidth));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-300)]
+        public void GetApiUrlWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        {
+            // Arrange
+            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
+
+            // Act
+
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => moviePosterDbService.GetApiUrl(invalidImdbMovieId, ImageWidth));
+        }
+
+        [Theory]
+        [InlineData(2304771)]
+        [InlineData(02304771)]
+        public void CalculateSecretWithImdbMovieIdReturnsCorrectSecret(int imdbMovieId)
+        {
+            // Arrange
+            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
+
+            // Act
+            var calculateSecret = moviePosterDbService.CalculateSecret(imdbMovieId);
+
+            // Assert
+            Assert.Equal("8435ce4c53ff", calculateSecret);
         }
 
         [Theory]
@@ -228,7 +226,7 @@
         [InlineData("http://www.imdb.com/title/tt2304771/")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference/")]
-        public void CalculateSecretReturnsCorrectSecret(string imdbMovieUrl)
+        public void CalculateSecretWithImdbMovieUrlReturnsCorrectSecret(string imdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -268,6 +266,21 @@
 
             // Assert
             Assert.Throws<ArgumentException>(() => moviePosterDbService.CalculateSecret(new Uri(invalidImdbMovieUrl)));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-300)]
+        public void CalculateSecretWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        {
+            // Arrange
+            var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
+
+            // Act
+
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => moviePosterDbService.CalculateSecret(invalidImdbMovieId));
         }
     }
 }

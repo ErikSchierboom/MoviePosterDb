@@ -14,16 +14,16 @@
         [InlineData("http://www.imdb.com/title/tt0234567/", 234567)]
         [InlineData("http://www.imdb.com/title/tt1234567/reference", 1234567)]
         [InlineData("http://www.imdb.com/title/tt0234567/reference", 234567)]
-        public void GetImdbIdWithValidImdbMovieUrlReturnsImdbIdFromUrl(string validImdbMovieUrl, int expectedImdbId)
+        public void GetImdbMovieIdWithValidImdbMovieUrlReturnsImdbMovieIdFromUrl(string validImdbMovieUrl, int expectedImdbMovieId)
         {
             // Arrange
             var url = new Uri(validImdbMovieUrl);
 
             // Act
-            var imdbId = url.GetImdbId();
+            var imdbMovieId = url.GetImdbMovieId();
 
             // Assert
-            Assert.Equal(expectedImdbId, imdbId);
+            Assert.Equal(expectedImdbMovieId, imdbMovieId);
         }
 
         [Theory]
@@ -43,7 +43,7 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => url.GetImdbId());
+            Assert.Throws<ArgumentException>(() => url.GetImdbMovieId());
         }
 
         [Theory]
@@ -52,7 +52,7 @@
         [InlineData("http://www.imdb.com/title/tt/")]
         [InlineData("http://www.imdb.com/title/")]
         [InlineData("http://www.imdb.com/title")]
-        public void GetImdbIdWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
+        public void GetImdbMovieIdWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
         {
             // Arrange
             var url = new Uri(incompleteImdbMovieUrl);
@@ -60,11 +60,11 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => url.GetImdbId());
+            Assert.Throws<ArgumentException>(() => url.GetImdbMovieId());
         }
 
         [Fact]
-        public void GetImdbIdOnNullUrlThrowsArgumentNullException()
+        public void GetImdbMovieIdOnNullUrlThrowsArgumentNullException()
         {
             // Arrange
             Uri nullUrl = null;
@@ -72,7 +72,7 @@
             // Act
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => nullUrl.GetImdbId());
+            Assert.Throws<ArgumentNullException>(() => nullUrl.GetImdbMovieId());
         }
     }
 }

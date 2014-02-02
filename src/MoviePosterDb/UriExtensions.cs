@@ -25,14 +25,14 @@
         /// Extract the IMDb ID from an IMDb movie url.
         /// </summary>
         /// <example>
-        /// Calling <see cref="GetImdbId"/> on the http://www.imdb.com/title/tt1408253/ url will return the number <b>1408253</b>.<br/>
-        /// Calling <see cref="GetImdbId"/> on the http://www.imdb.com/title/tt0120586/ url will return the number <b>120586</b>.
+        /// Calling <see cref="GetImdbMovieId"/> on the http://www.imdb.com/title/tt1408253/ url will return the number <b>1408253</b>.<br/>
+        /// Calling <see cref="GetImdbMovieId"/> on the http://www.imdb.com/title/tt0120586/ url will return the number <b>120586</b>.
         /// </example>
         /// <param name="imdbMovieUrl">The IMDb movie url.</param>
         /// <returns>The IMDb ID.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="imdbMovieUrl"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="imdbMovieUrl"/> is not a valid IMDb movie url.</exception>
-        public static int GetImdbId(this Uri imdbMovieUrl)
+        public static int GetImdbMovieId(this Uri imdbMovieUrl)
         {
             if (imdbMovieUrl == null)
             {

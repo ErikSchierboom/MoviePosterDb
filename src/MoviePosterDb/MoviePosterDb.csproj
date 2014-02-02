@@ -36,7 +36,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Check.cs" />
     <Compile Include="CryptographyExtensions.cs" />
+    <Compile Include="MoviePosterDbPoster.cs" />
+    <Compile Include="MoviePosterDbResult.cs" />
     <Compile Include="MoviePosterDbService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriExtensions.cs" />
