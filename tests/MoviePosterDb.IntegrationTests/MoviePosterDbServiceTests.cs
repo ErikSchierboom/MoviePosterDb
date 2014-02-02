@@ -1,6 +1,7 @@
 ﻿namespace MoviePosterDb.IntegrationTests
 {
     using System;
+    using System.Configuration;
     using System.Linq;
 
     using Xunit;
@@ -10,21 +11,8 @@
     {
         private const int ImageWidth = 300;
 
-        private static string ApiKey
-        {
-            get
-            {
-                throw new NotImplementedException("The API key must be known before integration testing");
-            }
-        }
-
-        private static string ApiSecret
-        {
-            get
-            {
-                throw new NotImplementedException("The API secret must be known before integration testing");
-            }
-        }
+        private static readonly string ApiKey = ConfigurationManager.AppSettings["ApiKey"];
+        private static readonly string ApiSecret = ConfigurationManager.AppSettings["ApiSecret"];
 
         [Theory]
         [InlineData("http://www.imdb.com/title/tt2304771")]
