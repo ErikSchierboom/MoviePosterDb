@@ -8,7 +8,7 @@
     public class CheckTests
     {
         [Fact]
-        public void NotNullWithNonNullParameterDoesNotThrowException()
+        public void NotNullOnNonNullParameterDoesNotThrowException()
         {
             // Arrange
             var nonNullObject = "not null";
@@ -20,7 +20,7 @@
         }
 
         [Fact]
-        public void NotNullWithParameterIsNullThrowsArgumentNullException()
+        public void NotNullOnParameterIsNullThrowsArgumentNullException()
         {
             // Arrange
             string nullObject = null;
@@ -32,7 +32,7 @@
         }
 
         [Fact]
-        public void NotNullWithParameterIsNullThrowsArgumentNullExceptionUsingSpecifiedParameterName()
+        public void NotNullOnParameterIsNullThrowsArgumentNullExceptionUsingSpecifiedParameterName()
         {
             // Arrange
             string nullObject = null;
@@ -45,7 +45,7 @@
         }
 
         [Fact]
-        public void NotNullOrEmptyWithNotNullOrEmptyOrEmptyParameterDoesNotThrowException()
+        public void NotNullOrEmptyOnNotNullOrEmptyOrEmptyParameterDoesNotThrowException()
         {
             // Arrange
             var nonNullObject = "not null";
@@ -57,7 +57,7 @@
         }
 
         [Fact]
-        public void NotNullOrEmptyWithParameterIsNullThrowsArgumentNullException()
+        public void NotNullOrEmptyOnParameterIsNullThrowsArgumentNullException()
         {
             // Arrange
             string nullObject = null;
@@ -69,7 +69,7 @@
         }
 
         [Fact]
-        public void NotNullOrEmptyWithParameterIsNullThrowsArgumentNullExceptionUsingSpecifiedParameterName()
+        public void NotNullOrEmptyOnParameterIsNullThrowsArgumentNullExceptionUsingSpecifiedParameterName()
         {
             // Arrange
             string nullObject = null;
@@ -82,7 +82,7 @@
         }
 
         [Fact]
-        public void NotNullOrEmptyWithParameterIsEmptyThrowsArgumentException()
+        public void NotNullOrEmptyOnParameterIsEmptyThrowsArgumentException()
         {
             // Arrange
             var nullObject = string.Empty;
@@ -94,7 +94,7 @@
         }
 
         [Fact]
-        public void NotNullOrEmptyWithParameterIsEmptyThrowsArgumentExceptionUsingSpecifiedParameterName()
+        public void NotNullOrEmptyOnParameterIsEmptyThrowsArgumentExceptionUsingSpecifiedParameterName()
         {
             // Arrange
             var nullObject = string.Empty;

@@ -69,7 +69,7 @@
         [InlineData("http://www.imdb.com/boxoffice/alltimegross?region=world-wide")]
         [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
         [InlineData("http://www.google.com")]
-        public void SearchWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
+        public void SearchUsingImdbMovieUrlWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -89,7 +89,7 @@
         [InlineData("http://www.imdb.com/boxoffice/alltimegross?region=world-wide")]
         [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
         [InlineData("http://www.google.com")]
-        public void SearchOverloadWithImageWidthWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
+        public void SearchUsingImdbMovieUrlAndImageWidthWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -106,7 +106,7 @@
         [InlineData("http://www.imdb.com/title/tt/")]
         [InlineData("http://www.imdb.com/title/")]
         [InlineData("http://www.imdb.com/title")]
-        public void SearchWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
+        public void SearchUsingImdbMovieUrlWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -123,7 +123,7 @@
         [InlineData("http://www.imdb.com/title/tt/")]
         [InlineData("http://www.imdb.com/title/")]
         [InlineData("http://www.imdb.com/title")]
-        public void SearchOverloadWithImageWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
+        public void SearchUsingImdbMovieUrlAndImageWidthWithIncompleteImdbMovieUrlThrowsArgumentException(string incompleteImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -140,7 +140,7 @@
         [InlineData(29)]
         [InlineData(301)]
         [InlineData(500)]
-        public void SearchOverloadWithImageWithImdbMovieUrlAndImageWidthOutOfRangeThrowsArgumentOutOfRangeException(int invalidImageWidth)
+        public void SearchUsingImdbMovieUrlAndImageWidthOutOfRangeThrowsArgumentOutOfRangeException(int invalidImageWidth)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -155,7 +155,7 @@
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-300)]
-        public void SearchWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        public void SearchUsingImdbMovieIdWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -170,7 +170,7 @@
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-300)]
-        public void SearchOverloadWithImageWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        public void SearchUsingImdbMovieIdAndImageWidthWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -184,7 +184,7 @@
         [Theory]
         [InlineData(2304771)]
         [InlineData(02304771)]
-        public void GetApiUrlWithImdbMovieIdReturnsCorrectApiUrl(int imdbMovieId)
+        public void GetApiUrlUsingImdbMovieIdReturnsCorrectApiUrl(int imdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -201,7 +201,8 @@
         [InlineData("http://www.imdb.com/title/tt2304771/")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference/")]
-        public void GetApiUrlWithImdbMovieUrlReturnsCorrectApiUrl(string imdbMovieUrl)
+        [InlineData("http://www.imdb.com/title/tt2304771/?ref_=nv_sr_1")]
+        public void GetApiUrlUsingImdbMovieUrlReturnsCorrectApiUrl(string imdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -214,7 +215,7 @@
         }
 
         [Fact]
-        public void GetApiUrlWithNullImdbMovieUrlThrowsArgumentNullException()
+        public void GetApiUrlUsingNullImdbMovieUrlThrowsArgumentNullException()
         {
             // Arrange
             Uri nullImdbMovieUrl = null;
@@ -232,7 +233,7 @@
         [InlineData("http://www.imdb.com/chart/top")]
         [InlineData("http://www.imdb.com/list/PQDCzc8WwVQ/")]
         [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
-        public void GetApiUrlWithInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
+        public void GetApiUrlUsingInvalidImdbMovieUrlThrowsArgumentException(string invalidImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -247,7 +248,7 @@
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-300)]
-        public void GetApiUrlWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        public void GetApiUrlUsingImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -261,7 +262,7 @@
         [Theory]
         [InlineData(2304771)]
         [InlineData(02304771)]
-        public void CalculateSecretWithImdbMovieIdReturnsCorrectSecret(int imdbMovieId)
+        public void CalculateSecretUsingImdbMovieIdReturnsCorrectSecret(int imdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -278,7 +279,8 @@
         [InlineData("http://www.imdb.com/title/tt2304771/")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference")]
         [InlineData("http://www.imdb.com/title/tt2304771/reference/")]
-        public void CalculateSecretWithImdbMovieUrlReturnsCorrectSecret(string imdbMovieUrl)
+        [InlineData("http://www.imdb.com/title/tt2304771/?ref_=nv_sr_1")]
+        public void CalculateSecretUsingImdbMovieUrlReturnsCorrectSecret(string imdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -291,7 +293,7 @@
         }
 
         [Fact]
-        public void CalculateSecretWithNullImdbMovieUrlThrowsArgumentNullException()
+        public void CalculateSecretUsingNullImdbMovieUrlThrowsArgumentNullException()
         {
             // Arrange
             Uri nullImdbMovieUrl = null;
@@ -309,7 +311,7 @@
         [InlineData("http://www.imdb.com/chart/top")]
         [InlineData("http://www.imdb.com/list/PQDCzc8WwVQ/")]
         [InlineData("http://www.imdb.com/user/ur3342822/ratings")]
-        public void CalculateSecretWithInvalidImdbUrlThrowsArgumentException(string invalidImdbMovieUrl)
+        public void CalculateSecretUsingInvalidImdbUrlThrowsArgumentException(string invalidImdbMovieUrl)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);
@@ -324,7 +326,7 @@
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-300)]
-        public void CalculateSecretWithImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
+        public void CalculateSecretUsingImdbMovieIdOutOfRangeThrowsArgumentOutOfRangeException(int invalidImdbMovieId)
         {
             // Arrange
             var moviePosterDbService = new MoviePosterDbService(ApiKey, ApiSecret);

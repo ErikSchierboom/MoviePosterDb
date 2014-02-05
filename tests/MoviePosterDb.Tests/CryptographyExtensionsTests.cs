@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void ToMd5WithEmptyStringReturnsCorrectHash()
+        public void ToMd5OnEmptyStringReturnsCorrectHash()
         {
             // Arrange
             var emptyString = string.Empty;
@@ -32,7 +32,7 @@
         }
 
         [Fact]
-        public void ToMd5WithNullStringThrowsArgumentNullException()
+        public void ToMd5OnNullStringThrowsArgumentNullException()
         {
             // Arrange
             string nullString = null;

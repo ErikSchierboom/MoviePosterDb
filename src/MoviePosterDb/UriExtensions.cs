@@ -9,7 +9,7 @@
     /// </summary>
     internal static class UriExtensions
     {
-        private static readonly Regex ImdbMovieUrlRegex = new Regex(@"https?://.*?imdb.com/title/tt(\d{7})/?");
+        private static readonly Regex ImdbMovieUrlRegex = new Regex(@"https?://.*?imdb.com/title/tt(\d{7})/?.*");
 
         /// <summary>
         /// Determins if a <see cref="Uri"/> represents an IMDb movie url.
