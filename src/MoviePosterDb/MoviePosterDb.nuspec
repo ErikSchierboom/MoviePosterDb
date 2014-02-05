@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/ErikSchierboom/MoviePosterDb</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright 2014</copyright>
+    <releaseNotes>Streamlined API.</releaseNotes>
+    <copyright>Copyright Erik Schierboom 2014</copyright>
     <tags>movieposterdb movie poster</tags>
   </metadata>
 </package>

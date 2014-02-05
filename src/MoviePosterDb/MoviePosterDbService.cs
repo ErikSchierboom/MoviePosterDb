@@ -42,6 +42,18 @@
         /// Search for a movie's posters based on an IMDb movie URL.
         /// </summary>
         /// <param name="imdbMovieUrl">The IMDb movie URL.</param>
+        /// <returns>The API result containing the movie's information and posters.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="imdbMovieUrl"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="imdbMovieUrl"/> is not a valid IMDb movie url.</exception>
+        public MoviePosterDbResult Search(Uri imdbMovieUrl)
+        {
+            return this.Search(imdbMovieUrl, MaximumImageWidth);
+        }
+
+        /// <summary>
+        /// Search for a movie's posters based on an IMDb movie URL.
+        /// </summary>
+        /// <param name="imdbMovieUrl">The IMDb movie URL.</param>
         /// <param name="imageWidth">The poster image's width to return.</param>
         /// <returns>The API result containing the movie's information and posters.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="imdbMovieUrl"/> is <c>null</c>.</exception>
@@ -54,6 +66,17 @@
             Check.InRange(imageWidth, MinimumImageWidth, MaximumImageWidth, "imageWidth");
 
             return RequestAndParseApiUrl(this.GetApiUrl(imdbMovieUrl, imageWidth));
+        }
+
+        /// <summary>
+        /// Search for a movie's posters based on an IMDb movie ID.
+        /// </summary>
+        /// <param name="imdbMovieId">The IMDb movie ID.</param>
+        /// <returns>The API result containing the movie's information and posters.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="imdbMovieId"/> is not greater than zero.</exception>
+        public MoviePosterDbResult Search(int imdbMovieId)
+        {
+            return this.Search(imdbMovieId, MaximumImageWidth);
         }
 
         /// <summary>
