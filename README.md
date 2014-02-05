@@ -83,7 +83,11 @@ This method also has an overload taking in the image width:
     //  ]
     //}
    
-Note that there is no difference between the two 
+Note that there both search methods (by ID or by URL) return the same result, it does not matter if you use the URL of ID version.
+
+# Test
+
+The solution also contains a sample website application, which allows you to test the MoviePosterDB API using this library to communicate with the API.
 
 ## Get it on NuGet!
 The library is available on NuGet package available. You can install it using the following command:
