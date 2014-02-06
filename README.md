@@ -1,19 +1,21 @@
 # MoviePosterDb
-A library to access the [API](http://api.movieposterdb.com/) for the [MoviePosterDb website](http://www.movieposterdb.com).
+A library to access the [API](http://api.movieposterdb.com/) for the [MoviePosterDb website](http://www.movieposterdb.com). This website contains a very large collection of movie posters.
 
 ## What can it be used for?
-The MoviePosterDB website hosts movie posters. This library allows one to find a movie's posters based on their IMDb movie ID.
+The MoviePosterDB website hosts movie posters. This library allows one to find a movie's posters based on their IMDb movie ID or IMDb movie URL.
 
 ## Usage
-Let's say we want to find the poster for the movie Inception. The first step is to find its IMDb page, which is located at: http://www.imdb.com/title/tt1375666/reference
-As can be seen in the URL, Inception's IMDb movie ID is **1375666**. To retrieve the poster URL we first need to create an instance of the `MoviePosterDbService` class. This class' constructor takes two arguments:
+Let's say we want to find the poster for the movie Inception. The first step is to find its IMDb page, which is located at: http://www.imdb.com/title/tt1375666/reference.
+As can be seen in the URL, Inception's IMDb movie ID is **1375666**. We can use this ID (or the complete URL) to search for the movie's posters. 
+
+To retrieve the poster URL we first need to create an instance of the `MoviePosterDbService` class. This class' constructor takes two arguments:
 
 1. `apiKey`: the API key.
 2. `apiSecret`: the API secret.
 
 Note: this API key and secret need to be requested from the MoviePosterDB crew, see [this page](http://www.movieposterdb.com/help/contact/#api).
 
-If you have your API key and secret, the `MoviePosterDbService` instance can be created:
+If you have an API key and secret, the `MoviePosterDbService` instance can be created as follows:
     
     var moviePosterDbService = new MoviePosterDbService("demo key", "demo secret");
 
@@ -36,8 +38,8 @@ We'll show both options, but we'll start with the first one. Retrieving the movi
     //  ]
     //}
         
-The `Search` method also has an overload that allows one to specify the desired maximum width of the returned poster. This image width must be a number between [30-300].
-If you try to find the poster result again using an IMDb movie ID but now with a desired image width, we get returned a different poster url:
+The `Search` method also has an overload that allows one to specify the desired maximum width of the returned poster. This image width parameter must be a number between [30-300].
+If you try to find the poster result again using an IMDb movie ID but now with an image width of 100, we get returned a different poster url:
 
     var imdbMovieId = 1375666;
     var imageWidth = 100;
@@ -90,7 +92,7 @@ Note that there both search methods (by ID or by URL) return the same result, it
 The solution also contains a sample website application, which allows you to test the MoviePosterDB API using this library to communicate with the API.
 
 ## Get it on NuGet!
-The library is available on NuGet package available. You can install it using the following command:
+The library is available as a [NuGet package](http://www.nuget.org/packages/MoviePosterDb/). You can install it using the following command:
 
     Install-Package MoviePosterDb
 
@@ -98,7 +100,7 @@ The library is available on NuGet package available. You can install it using th
 <table>
   <tr>
      <th>Date</th>
-     <th>Version</th>
+     <th>Version</th> 
      <th>Changes</th>
   </tr>
   <tr>
