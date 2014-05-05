@@ -80,18 +80,20 @@ var moviePosterDbResult = moviePosterDbService.Search(imdbMovieUrl);
 
 This method also has an overload taking in the image width:
 
-    var imdbMovieUrl = new Uri("http://www.imdb.com/title/tt1375666/reference");
-    var imageWidth = 100;
-    var moviePosterDbResult = moviePosterDbService.Search(imdbMovieUrl, imageWidth);
+```c#
+var imdbMovieUrl = new Uri("http://www.imdb.com/title/tt1375666/reference");
+var imageWidth = 100;
+var moviePosterDbResult = moviePosterDbService.Search(imdbMovieUrl, imageWidth);
 
-    //{
-    //  "Title": "Inception",
-    //  "Year": "2010",
-    //  "ImdbMovieId": "1375666",
-    //  "Posters": [
-    //    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_100.jpg" }
-    //  ]
-    //}
+//{
+//  "Title": "Inception",
+//  "Year": "2010",
+//  "ImdbMovieId": "1375666",
+//  "Posters": [
+//    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_100.jpg" }
+//  ]
+//}
+```
    
 Note that there both search methods (by ID or by URL) return the same result, it does not matter if you use the URL of ID version.
 
@@ -105,23 +107,10 @@ The library is available as a [NuGet package](http://www.nuget.org/packages/Movi
     Install-Package MoviePosterDb
 
 ## History
-<table>
-  <tr>
-     <th>Date</th>
-     <th>Version</th> 
-     <th>Changes</th>
-  </tr>
-  <tr>
-     <td>2014-02-05</td>
-     <td>1.1.0</td>
-     <td>Streamlined API.</td>
-  </tr>
-  <tr>
-     <td>2014-02-01</td>
-     <td>1.0.0</td>
-     <td>None. Initial version.</td>
-  </tr>
-</table>
+Date       | Version | Changes
+---------- | ------- | -------------------
+2014-02-05 | 1.1.0   | Streamlined API.
+2014-02-01 | 1.0.0   | None. Initial version.
 
 ## License
 [Apache License 2.0](LICENSE)
