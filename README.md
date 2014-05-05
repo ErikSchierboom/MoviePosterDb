@@ -58,6 +58,7 @@ var moviePosterDbResult = moviePosterDbService.Search(imdbMovieId, imageWidth);
 //    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_100.jpg" }
 //  ]
 //}
+```
 
 Note: some movies only have posters in a single size, which means that regardless of what you pass as the image size you'll get returned the same poster URL.
 
