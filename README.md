@@ -16,8 +16,10 @@ To retrieve the poster URL we first need to create an instance of the `MoviePost
 Note: this API key and secret need to be requested from the MoviePosterDB crew, see [this page](http://www.movieposterdb.com/help/contact/#api).
 
 If you have an API key and secret, the `MoviePosterDbService` instance can be created as follows:
-    
-    var moviePosterDbService = new MoviePosterDbService("demo key", "demo secret");
+
+```c#
+var moviePosterDbService = new MoviePosterDbService("demo key", "demo secret");
+```
 
 Now we have two options for finding the movie's posters.
 
@@ -26,49 +28,54 @@ Now we have two options for finding the movie's posters.
 
 We'll show both options, but we'll start with the first one. Retrieving the movie's poster information is as simple as calling the `Search` method on a `MoviePosterDbService` instance:
 
-    var imdbMovieId = 1375666;
-    var moviePosterDbResult = moviePosterDbService.Search(imdbMovieId);
+```c#
+var imdbMovieId = 1375666;
+var moviePosterDbResult = moviePosterDbService.Search(imdbMovieId);
 
-    //{
-    //  "Title": "Inception",
-    //  "Year": "2010",
-    //  "ImdbMovieId": "1375666",
-    //  "Posters": [
-    //    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_300.jpg" }
-    //  ]
-    //}
+//{
+//  "Title": "Inception",
+//  "Year": "2010",
+//  "ImdbMovieId": "1375666",
+//  "Posters": [
+//    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_300.jpg" }
+//  ]
+//}
+```
         
 The `Search` method also has an overload that allows one to specify the desired maximum width of the returned poster. This image width parameter must be a number between [30-300].
 If you try to find the poster result again using an IMDb movie ID but now with an image width of 100, we get returned a different poster url:
 
-    var imdbMovieId = 1375666;
-    var imageWidth = 100;
-    var moviePosterDbResult = moviePosterDbService.Search(imdbMovieId, imageWidth);
+```c#
+var imdbMovieId = 1375666;
+var imageWidth = 100;
+var moviePosterDbResult = moviePosterDbService.Search(imdbMovieId, imageWidth);
 
-    //{
-    //  "Title": "Inception",
-    //  "Year": "2010",
-    //  "ImdbMovieId": "1375666",
-    //  "Posters": [
-    //    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_100.jpg" }
-    //  ]
-    //}
+//{
+//  "Title": "Inception",
+//  "Year": "2010",
+//  "ImdbMovieId": "1375666",
+//  "Posters": [
+//    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_100.jpg" }
+//  ]
+//}
 
 Note: some movies only have posters in a single size, which means that regardless of what you pass as the image size you'll get returned the same poster URL.
 
 Option two is to search by the movie's IMDb url:
 
-    var imdbMovieUrl = new Uri("http://www.imdb.com/title/tt1375666/reference");
-    var moviePosterDbResult = moviePosterDbService.Search(imdbMovieUrl);
+```c#
+var imdbMovieUrl = new Uri("http://www.imdb.com/title/tt1375666/reference");
+var moviePosterDbResult = moviePosterDbService.Search(imdbMovieUrl);
 
-    //{
-    //  "Title": "Inception",
-    //  "Year": "2010",
-    //  "ImdbMovieId": "1375666",
-    //  "Posters": [
-    //    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_300.jpg" }
-    //  ]
-    //}
+//{
+//  "Title": "Inception",
+//  "Year": "2010",
+//  "ImdbMovieId": "1375666",
+//  "Posters": [
+//    { "Url": "http://api.movieposterdb.com/cache/normal/66/1375666/1375666_300.jpg" }
+//  ]
+//}
+```
 
 This method also has an overload taking in the image width:
 
