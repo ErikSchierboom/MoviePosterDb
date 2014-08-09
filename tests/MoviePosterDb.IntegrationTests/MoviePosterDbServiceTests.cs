@@ -1,7 +1,6 @@
 ﻿namespace MoviePosterDb.IntegrationTests
 {
     using System;
-    using System.Configuration;
     using System.Linq;
 
     using Xunit;
@@ -13,8 +12,8 @@
         private const int ImdbMovieIdWithPoster = 1375666;
         private const int ImdbMovieIdWithoutPoster = 196508;
 
-        private static readonly string ApiKey = ConfigurationManager.AppSettings["ApiKey"];
-        private static readonly string ApiSecret = ConfigurationManager.AppSettings["ApiSecret"];
+        private static readonly string ApiKey = Configuration.Get("ApiKey");
+        private static readonly string ApiSecret = Configuration.Get("ApiSecret");
         
         [Fact]
         public void SearchUsingImdbMovieIdForMovieWithPosterWillReturnCorrectMoviePosterDbResult()
