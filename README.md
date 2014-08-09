@@ -1,4 +1,7 @@
 # MoviePosterDb
+
+[![Build status](https://ci.appveyor.com/api/projects/status/8o23myiao9xno2f0)](https://ci.appveyor.com/project/ErikSchierboom/movieposterdb)
+
 A library to access the [API](http://api.movieposterdb.com/) for the [MoviePosterDb website](http://www.movieposterdb.com). This website contains a very large collection of movie posters.
 
 ## What can it be used for?
