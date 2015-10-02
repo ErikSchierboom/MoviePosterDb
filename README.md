@@ -1,6 +1,6 @@
 # MoviePosterDb
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8o23myiao9xno2f0)](https://ci.appveyor.com/project/ErikSchierboom/movieposterdb)
+[![Build status](https://ci.appveyor.com/api/projects/status/8o23myiao9xno2f0)](https://ci.appveyor.com/project/ErikSchierboom/movieposterdb) [![Coverage Status](https://coveralls.io/repos/ErikSchierboom/MoviePosterDb/badge.svg?branch=master&service=github)](https://coveralls.io/github/ErikSchierboom/MoviePosterDb?branch=master)
 
 A library to access the [API](http://api.movieposterdb.com/) for the [MoviePosterDb website](http://www.movieposterdb.com). This website contains a very large collection of movie posters.
 

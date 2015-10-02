@@ -1,0 +1,17 @@
+version: 1.0.{build}
+configuration: Release
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: Pka62kxAuS32oSLmoQ5jbGyiL2tWYX9vTrVt/62ohD+2XVR4/mOEACWy/rul6nTm
+  MOVIEPOSTERDB_API_KEY:
+    secure: Inw9vA48VDua1b5r5j7Gbw==
+  MOVIEPOSTERDB_API_SECRET:
+    secure: G1Gg5AGxkWBzeKPYSSmvyk6SZ34sVw3SrKLmvTH+m8e/MFC7hRu3Vs0DyF6g7clX
+before_build:
+- nuget restore
+build:
+  verbosity: minimal
+  project: MoviePosterDb.sln
+test_script:
+- ps: .\packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -target:$env:xunit20\xunit.console.exe "-targetargs:"".\tests\MoviePosterDb.Tests\bin\$env:CONFIGURATION\MoviePosterDb.Tests.dll"" "".\tests\MoviePosterDb.IntegrationTests\bin\$env:CONFIGURATION\MoviePosterDb.IntegrationTests.dll"" -noshadow -appveyor" -filter:"+[MoviePosterDb*]*" -output:coverage.xml
+- ps: .\packages\coveralls.net.0.6.0\tools\csmacnz.Coveralls.exe --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
