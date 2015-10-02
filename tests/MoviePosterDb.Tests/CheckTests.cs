@@ -16,7 +16,7 @@
             // Act
 
             // Assert
-            Assert.DoesNotThrow(() => Check.NotNull(nonNullObject, "nullObject"));
+            Check.NotNull(nonNullObject, "nullObject");
         }
 
         [Fact]
@@ -53,7 +53,7 @@
             // Act
 
             // Assert
-            Assert.DoesNotThrow(() => Check.NotNullOrEmpty(nonNullObject, "nullObject"));
+            Check.NotNullOrEmpty(nonNullObject, "nullObject");
         }
 
         [Fact]
@@ -115,7 +115,7 @@
             // Act
 
             // Assert
-            Assert.DoesNotThrow(() => Check.That("not null".Length > 0, nonNullObject, "Invalid length"));
+            Check.That("not null".Length > 0, nonNullObject, "Invalid length");
         }
 
         [Fact]
@@ -167,7 +167,7 @@
             // Act
 
             // Assert
-            Assert.DoesNotThrow(() => Check.GreaterThanZero(validValue, "validValue"));
+            Check.GreaterThanZero(validValue, "validValue");
         }
 
         [Theory]
@@ -210,7 +210,7 @@
             // Act
 
             // Assert
-            Assert.DoesNotThrow(() => Check.InRange(validValue, 1, 100, "validValue"));
+            Check.InRange(validValue, 1, 100, "validValue");
         }
 
         [Theory]

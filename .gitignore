@@ -113,3 +113,6 @@ UpgradeLog*.XML
 # Custom integration tests config file
 AppSettings.config
 /README.html
+
+# Visual Studio
+.vs
