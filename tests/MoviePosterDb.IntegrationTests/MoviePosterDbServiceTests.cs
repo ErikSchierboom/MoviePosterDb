@@ -12,8 +12,8 @@
         private const int ImdbMovieIdWithPoster = 1375666;
         private const int ImdbMovieIdWithoutPoster = 196508;
 
-        private static readonly string ApiKey = Configuration.Get("ApiKey");
-        private static readonly string ApiSecret = Configuration.Get("ApiSecret");
+        private static readonly string ApiKey = Configuration.Get("MOVIEPOSTERDB_API_KEY");
+        private static readonly string ApiSecret = Configuration.Get("MOVIEPOSTERDB_API_SECRET");
         
         [Fact]
         public void SearchUsingImdbMovieIdForMovieWithPosterWillReturnCorrectMoviePosterDbResult()
