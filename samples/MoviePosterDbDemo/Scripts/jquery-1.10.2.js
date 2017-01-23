@@ -1,4 +1,4 @@
-/* NUGET: BEGIN LICENSE TEXT
+/* : BEGIN LICENSE TEXT
  *
  * Microsoft grants you the right to use these script files for the sole
  * purpose of either: (i) interacting through your browser with the Microsoft
@@ -11,7 +11,7 @@
  * under the terms set out in this paragraph. All notices and licenses
  * below are for informational purposes only.
  *
- * NUGET: END LICENSE TEXT */
+ * : END LICENSE TEXT */
 /*!
  * jQuery JavaScript Library v1.10.2
  * http://jquery.com/
