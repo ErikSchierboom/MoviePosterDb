@@ -1,0 +1,7 @@
+ext install python
+<Reference Include="xunit.extensions">
+      <HintPath>..\..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+      
+<Reference Include="xunit">
+ -      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+ 
